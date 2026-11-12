@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#070b12"><meta name="referrer" content="no-referrer">
+<title>PVFINDER | Radar</title>
+<style>
+#pvStartup {min-height:100vh;min-height:100dvh;display:grid;place-content:center;text-align:center;background:#0e182c;color:#eaf4ff;font:16px system-ui}
+#pvStartup[hidden] {display:none}
+#pvStartup strong {color:#8fe3ff;letter-spacing:.09em;font-size:1.25rem}
+#pvStartup p {margin:.5rem 0;color:#a1afc8}
+#shell #gate.access-entry:not(.hidden) {min-height:100svh}
+</style>
+<link rel="stylesheet" href="/styles.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22192%22%20height%3D%22192%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%20%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22rim%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20stop-color%3D%22%2379e1ff%22%2F%3E%3Cstop%20offset%3D%22.62%22%20stop-color%3D%22%23a888ff%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23ffd67d%22%2F%3E%3C%2FlinearGradient%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22egg%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20stop-color%3D%22%2367cfff%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%236b53db%22%2F%3E%3C%2FlinearGradient%3E%0A%20%20%20%3C%2Fdefs%3E%0A%20%20%20%3Crect%20x%3D%222%22%20y%3D%222%22%20width%3D%2260%22%20height%3D%2260%22%20rx%3D%2217%22%20fill%3D%22%23090f20%22%20stroke%3D%22url%28%23rim%29%22%20stroke-width%3D%221.4%22%2F%3E%0A%20%20%20%3Cpath%20d%3D%22M32%2010c-7%200-17%2015-17%2025a17%2017%200%200%200%2034%200c0-10-10-25-17-25Z%22%20fill%3D%22url%28%23egg%29%22%20fill-opacity%3D%22.33%22%20stroke%3D%22url%28%23rim%29%22%20stroke-width%3D%222.1%22%2F%3E%0A%20%20%20%3Ccircle%20cx%3D%2232%22%20cy%3D%2233%22%20r%3D%229%22%20fill%3D%22none%22%20stroke%3D%22%23ffe096%22%20stroke-width%3D%221.7%22%2F%3E%0A%20%20%20%3Cpath%20d%3D%22M32%2020v6m0%2014v6M19%2033h6m14%200h6%22%20fill%3D%22none%22%20stroke%3D%22%23a6e5ff%22%20stroke-width%3D%221.6%22%20stroke-linecap%3D%22round%22%2F%3E%0A%20%20%20%3Cpath%20d%3D%22m32%2028%204%205-4%205-4-5z%22%20fill%3D%22%23ffe096%22%2F%3E%0A%20%20%20%3Cpath%20d%3D%22m49%2011%201.5%203.5L54%2016l-3.5%201.5L49%2021l-1.5-3.5L44%2016l3.5-1.5z%22%20fill%3D%22%23ffdb85%22%2F%3E%0A%20%20%3C%2Fsvg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22192%22%20height%3D%22192%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%20%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22rim%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20stop-color%3D%22%2379e1ff%22%2F%3E%3Cstop%20offset%3D%22.62%22%20stop-color%3D%22%23a888ff%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23ffd67d%22%2F%3E%3C%2FlinearGradient%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22egg%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20stop-color%3D%22%2367cfff%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%236b53db%22%2F%3E%3C%2FlinearGradient%3E%0A%20%20%20%3C%2Fdefs%3E%0A%20%20%20%3Crect%20x%3D%222%22%20y%3D%222%22%20width%3D%2260%22%20height%3D%2260%22%20rx%3D%2217%22%20fill%3D%22%23090f20%22%20stroke%3D%22url%28%23rim%29%22%20stroke-width%3D%221.4%22%2F%3E%0A%20%20%20%3Cpath%20d%3D%22M32%2010c-7%200-17%2015-17%2025a17%2017%200%200%200%2034%200c0-10-10-25-17-25Z%22%20fill%3D%22url%28%23egg%29%22%20fill-opacity%3D%22.33%22%20stroke%3D%22url%28%23rim%29%22%20stroke-width%3D%222.1%22%2F%3E%0A%20%20%20%3Ccircle%20cx%3D%2232%22%20cy%3D%2233%22%20r%3D%229%22%20fill%3D%22none%22%20stroke%3D%22%23ffe096%22%20stroke-width%3D%221.7%22%2F%3E%0A%20%20%20%3Cpath%20d%3D%22M32%2020v6m0%2014v6M19%2033h6m14%200h6%22%20fill%3D%22none%22%20stroke%3D%22%23a6e5ff%22%20stroke-width%3D%221.6%22%20stroke-linecap%3D%22round%22%2F%3E%0A%20%20%20%3Cpath%20d%3D%22m32%2028%204%205-4%205-4-5z%22%20fill%3D%22%23ffe096%22%2F%3E%0A%20%20%20%3Cpath%20d%3D%22m49%2011%201.5%203.5L54%2016l-3.5%201.5L49%2021l-1.5-3.5L44%2016l3.5-1.5z%22%20fill%3D%22%23ffdb85%22%2F%3E%0A%20%20%3C%2Fsvg%3E">
+</head>
+<body>
+<div id="pvStartup" role="status"><strong>PVFINDER</strong><p>Abriendo el radar…</p><noscript>Activa JavaScript para entrar al radar.</noscript></div>
+<div class="ambient ambient-one"></div><div class="ambient ambient-two"></div>
+<div class="shell" id="shell">
+  <span id="connection" hidden>Sin conectar</span>
+  <div class="site-announcement" id="site-announcement" hidden></div>
+  <main id="gate" class="gate access-entry hidden">
+    <div class="gate-card">
+      <div class="gate-symbol pv-clean-brand" aria-hidden="true"></div><div class="eyebrow" data-site-field="home_access_tag">RADAR DE HUEVOS</div>
+      <h1><span data-site-field="home_title_first">Acceso</span><br><span class="grad" data-site-field="home_title_second">privado</span></h1>
+      <p data-site-field="home_description">Usa tu enlace o token de PVFINDER para ver los hallazgos de Roba un huevo.</p>
+      <div class="gate-form">
+        <label for="accessToken">Enlace de acceso o token privado</label>
+        <input id="accessToken" type="text" autocomplete="off" spellcheck="false" placeholder="Pega tu token privado">
+        <button class="primary" id="redeemBtn"><span data-site-field="home_access_button">Entrar al radar</span> <span>↗</span></button>
+      </div>
+      <details class="access-admin"><summary>Acceso de administrador</summary>
+      <div class="gate-form">
+        <label for="adminPassword">Contraseña de administrador</label>
+        <input id="adminPassword" type="password" autocomplete="current-password" placeholder="Contraseña del servidor">
+        <button class="secondary full" id="adminLoginBtn">ENTRAR A PVFINDER ADMIN</button>
+      </div>
+      </details>
+      <nav class="access-links" aria-label="Soporte y planes">
+        <a href="/ventas">Planes y farmeo</a>
+        <a href="https://discord.com/channels/1565963083212398804/1568820015128645652">Soporte en Discord</a>
+      </nav>
+      <div id="gateMessage" class="message" role="status"></div>
+    </div>
+  </main>
+  <div id="app" class="workspace hidden">
+    <aside class="sidebar admin-only hidden">
+      <div class="side-label">MONITOR</div>
+      <button class="nav selected" data-view="feed"><span class="nav-icon">◉</span> Live Feed <span class="nav-end">↗</span></button>
+      <button class="nav admin-only" data-view="top"><span class="nav-icon">▥</span> Top 5</button>
+      <div class="side-label side-gap admin-only">RAREZAS</div>
+      <button class="nav admin-only" data-view="Cosmic"><span class="rare-dot cosmic"></span> Cosmic <span class="nav-count" data-count="Cosmic">0</span></button>
+      <button class="nav admin-only" data-view="Secret"><span class="rare-dot secret"></span> Secret <span class="nav-count" data-count="Secret">0</span></button>
+      <button class="nav admin-only" data-view="Eternal"><span class="rare-dot eternal"></span> Eternal <span class="nav-count" data-count="Eternal">0</span></button>
+      <button class="nav admin-only" data-view="Divine"><span class="rare-dot divine"></span> Divine <span class="nav-count" data-count="Divine">0</span></button>
+      <div class="side-label side-gap admin-only">CONTROL</div>
+      <button class="nav admin-only" data-view="stats"><span class="nav-icon">▤</span> Estadísticas</button>
+      <a class="nav admin-only" href="/bots" target="_blank" rel="noopener"><span class="nav-icon">◈</span> Centro de bots ↗</a>
+      <button class="nav admin-only" data-view="admin"><span class="nav-icon">⚙</span> PVFINDER Admin</button>
+      <button class="nav admin-only" data-view="logs"><span class="nav-icon">⌁</span> Logs</button>
+      <div class="sidebar-bottom"><div class="server-indicator"><span class="pulse"></span> <span id="roleIndicator">Acceso limitado</span></div><button class="logout" id="logoutBtn">↪ Cerrar sesión</button></div>
+    </aside>
+    <section class="main-content">
+      <div class="section-top"><div class="radar-intro"><div class="eyebrow" id="sectionEyebrow" data-site-field="home_live_tag">MONITOREO EN TIEMPO REAL</div><h1 id="sectionTitle">Live <span class="grad">Feed</span></h1><p id="sectionCaption" data-site-field="home_live_caption">Solo huevos detectados por escáneres en los últimos 90 segundos. Historial interno conservado.</p></div><button type="button" class="secondary admin-only hidden" id="refreshBtn">Actualizar</button></div>
+      <div class="stats-grid admin-only" id="privateStats"><div class="stat"><span>TOTAL DE HUEVOS</span><strong id="statTotal">0</strong><small>Detectados recientemente</small><i class="stat-icon">◈</i></div><div class="stat"><span>COSMIC</span><strong id="statCosmic">0</strong><small>Ejemplares</small><i class="stat-icon cosmic-text">✦</i></div><div class="stat"><span>SECRET</span><strong id="statSecret">0</strong><small>Ejemplares</small><i class="stat-icon secret-text">✧</i></div><div class="stat"><span>ETERNAL + DIVINE</span><strong id="statHigh">0</strong><small>Ejemplares</small><i class="stat-icon eternal-text">◆</i></div></div>
+      <div class="panel" id="resultsPanel"><details id="pvEventBanners" hidden><summary>Eventos oficiales</summary><div id="pvEventList"></div></details>
+      <div class="radar-toolbar">
+        <div class="pv-quick-brand">
+          <span class="pv-logo"><svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" aria-hidden="true" viewBox="0 0 64 64">
+   <defs>
+    <linearGradient id="rim" x2="1" y2="1"><stop stop-color="#79e1ff"/><stop offset=".62" stop-color="#a888ff"/><stop offset="1" stop-color="#ffd67d"/></linearGradient>
+    <linearGradient id="egg" x2="1" y2="1"><stop stop-color="#67cfff"/><stop offset="1" stop-color="#6b53db"/></linearGradient>
+   </defs>
+   <rect x="2" y="2" width="60" height="60" rx="17" fill="#090f20" stroke="url(#rim)" stroke-width="1.4"/>
+   <path d="M32 10c-7 0-17 15-17 25a17 17 0 0 0 34 0c0-10-10-25-17-25Z" fill="url(#egg)" fill-opacity=".33" stroke="url(#rim)" stroke-width="2.1"/>
+   <circle cx="32" cy="33" r="9" fill="none" stroke="#ffe096" stroke-width="1.7"/>
+   <path d="M32 20v6m0 14v6M19 33h6m14 0h6" fill="none" stroke="#a6e5ff" stroke-width="1.6" stroke-linecap="round"/>
+   <path d="m32 28 4 5-4 5-4-5z" fill="#ffe096"/>
+   <path d="m49 11 1.5 3.5L54 16l-3.5 1.5L49 21l-1.5-3.5L44 16l3.5-1.5z" fill="#ffdb85"/>
+  </svg><span>PVFINDER</span></span>
+          <span class="live-tag"><span>Reset</span> <time id="radarReload">—</time></span>
+          <a class="radar-discord" href="https://discord.com/channels/1565963083212398804/1568820015128645652">Discord</a>
+          <button type="button" class="radar-logout" id="radarLogout">Mi cuenta</button>
+        </div>
+        <div role="group" aria-label="Vista de detecciones">
+          <button type="button" id="radarLive" aria-pressed="true">En vivo</button>
+          <button type="button" id="radarHistory" aria-pressed="false">Historial</button>
+        </div>
+        <div class="pv-radar-actions">
+          <button type="button" id="pvFilterOpen">Filtros</button>
+          <button type="button" id="pvAlertOpen" aria-pressed="false">Alertas</button>
+          <button type="button" id="pvCatalogOpen">Catálogo</button>
+          <input id="radarSearch" type="search" aria-label="Buscar mascota o huevo" placeholder="Buscar mascota…">
+        </div>
+        <output id="pvScanCount" class="pv-scan-count" hidden></output>
+        <div id="pvRadarFilterState" hidden>
+        <label>Rareza <select id="radarRarity"><option value="">Todas</option></select></label>
+        <label>Bioma <select id="radarBiome"><option value="">Todos</option></select></label>
+        <label>Tipo de ingreso <select id="radarIncomeType"><option value="">Todos</option><option value="DIRECTO">Directo declarado</option><option value="ESTIMADO">Estimado</option><option value="DESCONOCIDO">Sin origen confirmado</option></select></label>
+            <label>Ingreso mínimo por segundo <select id="minIncomeFilter" aria-label="Ingreso mínimo por segundo" title="Ingreso mínimo por segundo"><option value="0" selected>Todos, incluso sin ingreso</option><option value="100000000">100M/s o más</option><option value="250000000">250M/s o más</option><option value="500000000">500M/s o más</option><option value="1000000000">1B/s o más</option><option value="5000000000">5B/s o más</option><option value="10000000000">10B/s o más</option><option value="25000000000">25B/s o más</option><option value="50000000000">50B/s o más</option><option value="100000000000">100B/s o más</option><option value="250000000000">250B/s o más</option><option value="500000000000">500B/s o más</option></select></label>
+        </div>
+        <button type="button" id="radarRandom" class="radar-random">Servidor aleatorio</button>
+        <div class="radar-sort-row" role="group" aria-label="Orden de resultados">
+          <button type="button" data-radar-sort="income" aria-pressed="true">Generación</button>
+          <button type="button" data-radar-sort="weight" aria-pressed="false">Tamaño</button>
+          <button type="button" data-radar-sort="recent" aria-pressed="false">Reciente</button>
+          <button type="button" data-radar-sort="rarity" aria-pressed="false">Raro</button>
+          <button type="button" data-radar-sort="multiplier" aria-pressed="false">Multiplicador</button>
+        </div>
+      </div>
+      <div class="panel-bar radar-results-label"><div class="panel-title"><span id="resultsHeading">Detectados recientemente</span> <span class="count-tag admin-only" id="resultsCount">0</span></div></div><div class="table-head"><span>HUEVO / RAREZA</span><span>BIOMA / SERVIDOR</span><span>INGRESOS / SEG</span><span>MASA</span><span>ACTUALIZADO</span><span>UNIRSE</span></div><div id="feedRows" class="feed-rows"><div class="empty">Esperando detecciones recientes del escáner.</div></div><div class="history-pagination"><button id="loadMoreBtn" class="secondary hidden">CARGAR MÁS DETECCIONES</button></div><div class="panel-foot"><span id="panelFoot">Datos provenientes de recolectores autorizados</span><button id="copyResultsBtn" class="ghost admin-only">⧉ Copiar resultados</button></div></div>
+      <div id="adminPanel" class="panel admin-panel hidden"><div class="panel-bar"><div class="panel-title"><span class="panel-glyph">⚙</span> PVFINDER ADMIN</div><div class="admin-tabs"><button data-admin="links" class="active">Enlaces</button><button data-admin="collectors">Recolectores</button><button data-admin="diagnostics">Diagnósticos</button></div></div><div id="adminBody" class="admin-body"></div></div>
+      <div id="logsPanel" class="panel logs-panel hidden"><div class="panel-bar"><div class="panel-title"><span class="panel-glyph">⌁</span> PANELCOMMANDS · REGISTRO</div><button class="ghost" id="copyLogsBtn">⧉ Copiar</button></div><pre id="logOutput" class="log-output">[PVFINDER] Esperando actualizaciones...</pre></div>
+      <div class="footer-note"><span data-site-field="home_footer_text">PVFINDER v1.1 · JOIN</span><span>● DATOS REPORTADOS · NO VERIFICADOS INDEPENDIENTEMENTE</span></div>
+    </section>
+  </div>
+</div>
+<div class="toast" id="toast" role="status"></div>
+<script defer src="/app.js?v=radar-startup-20261109"></script>
+<script defer src="/site-config.js"></script>
+<script defer src="/branding.js"></script>
+</body></html>

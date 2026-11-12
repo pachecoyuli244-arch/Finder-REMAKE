@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#100c1c">
+  <meta name="referrer" content="no-referrer">
+  <title>PVFINDER · Centro de bots</title>
+  <link rel="stylesheet" href="/bots.css">
+  <script defer src="/bots.js"></script>
+</head>
+<body>
+  <div class="ambient ambient-one" aria-hidden="true"></div>
+  <div class="ambient ambient-two" aria-hidden="true"></div>
+  <div class="container">
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">P<span>V</span></span>
+        <div><strong>PVFINDER <em>OPS</em></strong><small>MONITOR DE RECOLECTORES</small></div>
+      </div>
+      <nav class="header-actions" aria-label="Navegación">
+        <a class="navlink" href="/">↗ Abrir Finder</a>
+        <button class="outline" id="logout" type="button" hidden>Cerrar sesión</button>
+      </nav>
+    </header>
+
+    <main>
+      <section class="login card" id="login">
+        <p class="overline">ACCESO EXCLUSIVO DEL PROPIETARIO</p>
+        <h1>Control de bots<span class="accent">.</span></h1>
+        <p class="muted">Este panel es independiente del Live Feed. Muestra estadísticas de recolectores registradas en tu servidor PVFINDER.</p>
+        <form id="loginForm">
+          <label for="password">Contraseña o key de Owner</label>
+          <div class="login-row"><input id="password" type="password" minlength="12" required autocomplete="current-password" placeholder="Clave de administrador"><button type="submit" class="primary" id="loginButton">Entrar →</button></div>
+        </form>
+        <p class="error" id="loginError" role="alert" aria-live="polite"></p>
+        <p class="small-note">No se guardan contraseñas ni llaves en este panel.</p>
+      </section>
+
+      <section id="dashboard" hidden>
+        <div class="pageheading">
+          <div><p class="overline"><span class="live-dot" aria-hidden="true"></span> MONITOREO · DATOS DE RENDER</p><h1>Centro de <span class="accent">bots.</span></h1><p class="muted">Actividad y estadísticas de tus recolectores, sin modificar su funcionamiento.</p></div>
+          <div class="controls">
+            <div class="refresh-info"><span id="connectionDot" class="status-dot"></span><span id="syncState">Conectando…</span><small id="syncTime">—</small></div>
+            <button type="button" class="outline" id="refresh">↻ Actualizar</button>
+          </div>
+        </div>
+        <p id="error" class="error" role="alert" aria-live="polite" hidden></p>
+        <section class="hero-cards" aria-label="Resumen de estados">
+          <article class="hero-card hero-active"><span class="stat-icon">◉</span><div><p>Con actividad reciente</p><strong id="activeCount">—</strong><small>Señal o informe en los últimos 5 min</small></div></article>
+          <article class="hero-card hero-paused"><span class="stat-icon">Ⅱ</span><div><p>Pausados (informado)</p><strong id="pausedCount">—</strong><small>Estado recibido en los últimos 90 s</small></div></article>
+          <article class="hero-card hero-offline"><span class="stat-icon">◌</span><div><p>Sin señal reciente</p><strong id="offlineCount">—</strong><small>No equivale necesariamente a apagado</small></div></article>
+        </section>
+
+        <section class="section">
+          <div class="section-heading"><div><p class="overline">RESUMEN EN TIEMPO REAL</p><h2>Operación general</h2></div><span class="aside-note" id="windowLabel">Ciclo de 5 minutos</span></div>
+          <div class="metric-grid">
+            <article class="metric"><span>🖥️ Registrados</span><strong id="registered">—</strong><small>Total de recolectores históricos</small></article>
+            <article class="metric"><span>🟣 Sin revocar</span><strong id="available">—</strong><small>Con credencial aún habilitada</small></article>
+            <article class="metric"><span>⚡ Escaneando</span><strong id="scanning">—</strong><small>Señal recibida en 90 s</small></article>
+            <article class="metric"><span>↗ Cambiando servidor</span><strong id="moving">—</strong><small>Movimiento informado en 90 s</small></article>
+            <article class="metric"><span>🌐 Servidores del ciclo</span><strong id="serversCycle">—</strong><small>Escaneos registrados en el ciclo actual</small></article>
+            <article class="metric"><span>📡 Servidores con datos / 1 h</span><strong id="serversHour">—</strong><small>Con al menos una detección actualizada</small></article>
+            <article class="metric"><span>🥚 Huevos / 1 h</span><strong id="eggsHour">—</strong><small>Registros únicos actualizados</small></article>
+            <article class="metric"><span>🗓️ Huevos / 24 h</span><strong id="eggsDay">—</strong><small>Registros únicos actualizados</small></article>
+            <article class="metric"><span>💾 Huevos guardados</span><strong id="eggsSaved">—</strong><small>Registros de detección en el historial</small></article>
+            <article class="metric"><span>🔑 Sesiones de bot vigentes</span><strong id="sessions">—</strong><small>Credenciales automáticas no vencidas</small></article>
+          </div>
+        </section>
+
+        <div class="columns section">
+          <section class="card activity-card" aria-labelledby="activityTitle">
+            <div class="section-heading compact"><div><p class="overline">ÚLTIMOS 60 MINUTOS</p><h2 id="activityTitle">Actividad de detecciones</h2></div><span class="aside-note">Por bloques de 5 min</span></div>
+            <div id="bars" class="bars" role="img" aria-label="Gráfico de huevos reportados en los últimos 60 minutos"></div>
+            <p class="small-note">Cada barra cuenta registros cuyo último informe fue actualizado en ese intervalo, no envíos individuales.</p>
+          </section>
+          <section class="card coordination-card" aria-labelledby="coordTitle">
+            <div class="section-heading compact"><div><p class="overline">COORDINACIÓN</p><h2 id="coordTitle">Estado de servidores</h2></div></div>
+            <div class="coord-row"><span><i class="mini-dot reserved"></i> Reservados</span><strong id="hopReserved">—</strong></div>
+            <div class="coord-row"><span><i class="mini-dot assigned"></i> Marcados como visitados</span><strong id="hopAssigned">—</strong></div>
+            <div class="coord-row"><span><i class="mini-dot done"></i> Terminados</span><strong id="hopDone">—</strong></div>
+            <div class="coord-row"><span><i class="mini-dot revoked"></i> Recolectores revocados</span><strong id="revoked">—</strong></div>
+            <p class="small-note">Son estados guardados por el coordinador, no un conteo confirmado de clientes conectados a Roblox.</p>
+          </section>
+        </div>
+
+        <section class="section bots-section" aria-labelledby="botsHeading">
+          <div class="section-heading">
+            <div><p class="overline">RECOLECTORES INDIVIDUALES</p><h2 id="botsHeading">Tus bots <span class="soft-count" id="botTotal">—</span></h2></div>
+            <button type="button" class="outline" id="copySummary">⧉ Copiar resumen</button>
+          </div>
+          <div class="filters">
+            <div class="filter-pills" aria-label="Filtrar por estado" id="filters">
+              <button type="button" data-filter="all" aria-pressed="true">Todos</button>
+              <button type="button" data-filter="active" aria-pressed="false">Con actividad</button>
+              <button type="button" data-filter="paused" aria-pressed="false">Pausados</button>
+              <button type="button" data-filter="offline" aria-pressed="false">Sin señal</button>
+            </div>
+            <input id="search" type="search" aria-label="Buscar bot" placeholder="Buscar nombre de bot…">
+          </div>
+          <p id="tableInfo" class="table-info"></p>
+          <div class="table-scroll">
+            <table>
+              <thead><tr><th>Bot</th><th>Estado</th><th>Última señal</th><th>Último escaneo</th><th>Huevos / 1 h</th><th>Servidores con datos / 1 h</th><th>Último servidor reportado</th></tr></thead>
+              <tbody id="botRows"><tr><td colspan="7" class="empty">Cargando estadísticas…</td></tr></tbody>
+            </table>
+          </div>
+        </section>
+
+        <footer>PVFINDER OPS · Solo Owner · Estadísticas observadas, no telemetría del dispositivo · <a href="/">Ir al Finder</a></footer>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
